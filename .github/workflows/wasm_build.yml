@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         os-type: [windows-latest]
-        configuration: [Debug, Release]
+        configuration: [Release]
 
     steps:
     - uses: actions/checkout@v2
@@ -41,4 +41,4 @@ jobs:
       with:
         overwrite: true
         name: package
-        path: assimpjs/*
+        path: dist/*
