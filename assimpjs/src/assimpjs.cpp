@@ -49,6 +49,10 @@ static bool ExportScene (const aiScene* scene, const std::string& format, Result
 
 	Assimp::ExportProperties exportProperties;
 	exportProperties.SetPropertyBool ("JSON_SKIP_WHITESPACES", true);
+	exportProperties.SetPropertyBool("EXPORT_TEXTURE_EMBEDDED", true);
+        exportProperties.SetPropertyBool("EXPORT_COLORS", true);
+        exportProperties.SetPropertyInteger("EXPORT_TEXTURE_FORMAT", 0);
+	
 	std::string fileName = GetFileNameFromFormat (format);
 	aiReturn exportResult = exporter.Export (scene, format.c_str (), fileName.c_str (), 0u, &exportProperties);
 	if (exportResult != aiReturn_SUCCESS) {
