@@ -37,3 +37,7 @@ jobs:
       run: |
         $env:TEST_CONFIG="${{matrix.configuration}}"
         npm run test
+    - uses: actions/upload-artifact@v4
+      with:
+        name: assimpjs.wasm
+        path: Release/assimpjs.wasm
