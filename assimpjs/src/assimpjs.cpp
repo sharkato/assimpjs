@@ -49,6 +49,7 @@ static bool ExportScene (const aiScene* scene, const std::string& format, Result
 
 	Assimp::ExportProperties exportProperties;
 	exportProperties.SetPropertyBool ("JSON_SKIP_WHITESPACES", true);
+	// for texture embedding
 	exportProperties.SetPropertyBool("EXPORT_TEXTURE_EMBEDDED", true);
         exportProperties.SetPropertyBool("EXPORT_COLORS", true);
         exportProperties.SetPropertyInteger("EXPORT_TEXTURE_FORMAT", 0);
