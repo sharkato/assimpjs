@@ -39,5 +39,6 @@ jobs:
         npm run test
     - uses: actions/upload-artifact@v4
       with:
+        overwrite: true
         name: package
         path: assimpjs/*
