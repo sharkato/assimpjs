@@ -41,4 +41,4 @@ jobs:
       with:
         overwrite: true
         name: package
-        path: dist/*
+        path: build_wasm/*
