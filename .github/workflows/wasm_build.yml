@@ -28,6 +28,11 @@ jobs:
       run: ./tools/setup_emscripten_win.bat
     - name: Build WASM
       run: ./tools/build_wasm_win.bat ${{matrix.configuration}}
+    - uses: actions/upload-artifact@v4
+      with:
+        overwrite: true
+        name: package
+        path: build_wasm/*
     - name: Update Package
       if: ${{ matrix.configuration == 'Release' }}
       run: |
@@ -37,8 +42,3 @@ jobs:
       run: |
         $env:TEST_CONFIG="${{matrix.configuration}}"
         npm run test
-    - uses: actions/upload-artifact@v4
-      with:
-        overwrite: true
-        name: package
-        path: build_wasm/*
