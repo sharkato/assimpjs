@@ -8,15 +8,20 @@
 #include <stdio.h>
 #include <iostream>
 
-static const aiScene* ImportFileListByMainFile (Assimp::Importer& importer, const File& file)
+static const aiScene* ImportFileListByMainFile (Assimp::Importer& importer, const File& file, const std::string& format)
 {
+
+	unsigned int flags = aiProcess_Triangulate |
+		     	     aiProcess_GenUVCoords |
+		     	     aiProcess_JoinIdenticalVertices |
+		     	     aiProcess_SortByPType;
+
+	if (format == "glb" || format == "glb2") {
+		flags = flags | aiProcess_EmbedTextures;
+	}
+	
 	try {
-		const aiScene* scene = importer.ReadFile (file.path,
-			aiProcess_Triangulate |
-			aiProcess_GenUVCoords |
-			aiProcess_JoinIdenticalVertices |
-			aiProcess_SortByPType |
-			aiProcess_EmbedTextures);
+		const aiScene* scene = importer.ReadFile (file.path, flags);
 		return scene;
 	} catch (...) {
 		return nullptr;
@@ -70,7 +75,7 @@ Result ConvertFile (const File& file, const std::string& format, const FileLoade
 {
 	Assimp::Importer importer;
 	importer.SetIOHandler (new DelayLoadedIOSystemReadAdapter (file, loader));
-	const aiScene* scene = ImportFileListByMainFile (importer, file);
+	const aiScene* scene = ImportFileListByMainFile (importer, file, format);
 
 	Result result;
 	ExportScene (scene, format, result);
@@ -89,7 +94,7 @@ Result ConvertFileList (const FileList& fileList, const std::string& format)
 	const aiScene* scene = nullptr;
 	for (size_t fileIndex = 0; fileIndex < fileList.FileCount (); fileIndex++) {
 		const File& file = fileList.GetFile (fileIndex);
-		scene = ImportFileListByMainFile (importer, file);
+		scene = ImportFileListByMainFile (importer, file, format);
 		if (scene != nullptr) {
 			break;
 		}
