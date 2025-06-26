@@ -15,7 +15,8 @@ static const aiScene* ImportFileListByMainFile (Assimp::Importer& importer, cons
 			aiProcess_Triangulate |
 			aiProcess_GenUVCoords |
 			aiProcess_JoinIdenticalVertices |
-			aiProcess_SortByPType);
+			aiProcess_SortByPType |
+			aiProcess_EmbedTextures);
 		return scene;
 	} catch (...) {
 		return nullptr;
